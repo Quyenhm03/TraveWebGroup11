@@ -40,6 +40,17 @@ export const getAllBooking = async(req,res) => {
    }
 } 
 
+//Get booking count 
+export const getBookingCount = async(req,res) => {
+   try {
+      const bookingCount = await Booking.estimatedDocumentCount()
+
+      res.status(200).json({success:true, data:bookingCount})
+   } catch (error) {
+      res.status(500).json({success:false, message: "Failed to fetch"})
+   }
+}
+
 //Update Booking
 export const updateBooking = async (req, res) => {
    const id = req.params.id
