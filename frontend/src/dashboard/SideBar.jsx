@@ -25,6 +25,9 @@ const SideBar = () => {
           <Sidebar.Item href="/admin/dashboard/manageblog" icon={HiInbox}>
             Manage Blog
           </Sidebar.Item>
+          <Sidebar.Item href="/admin/dashboard/managebooking" icon={HiInbox}>
+            Manage Booking
+          </Sidebar.Item>
           <Sidebar.Item href="/admin/dashboard/manageuser" icon={HiUser}>
             Users
           </Sidebar.Item>
