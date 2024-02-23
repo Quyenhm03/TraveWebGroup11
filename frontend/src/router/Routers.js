@@ -18,6 +18,7 @@ import ManageTour from '../dashboard/ManageTour'
 import ManageBlog from '../dashboard/ManageBlog'
 import ManageUser from '../dashboard/ManageUser'
 import Dashboard from '../dashboard/Dashboard'
+import ManageBooking from '../dashboard/ManageBooking'
 
 const Routers = () => {
    return (
@@ -40,6 +41,7 @@ const Routers = () => {
          <Route path='/admin/dashboard/edittour/:id' element={<EditTour/>} />
          <Route path='/admin/dashboard/editblog/:id' element={<EditBlog/>} />
          <Route path='/admin/dashboard/manageuser' element={<ManageUser/>} />
+         <Route path='/admin/dashboard/managebooking' element={<ManageBooking/>} />
          <Route path='/tours/search' element={<SearchResultList/>} />
       </Routes>
    )
