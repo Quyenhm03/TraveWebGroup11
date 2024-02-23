@@ -39,3 +39,31 @@ export const getAllBooking = async(req,res) => {
       res.status(500).json({success:true, message:"Internal server error!"})
    }
 } 
+
+//Update Booking
+export const updateBooking = async (req, res) => {
+   const id = req.params.id
+
+   try {
+      const updatedBooking = await Booking.findByIdAndUpdate(id, {
+         $set: req.body
+      }, { new: true })
+
+      res.status(200).json({ success: true, message: 'Successfully updated', data: updatedBooking })
+   } catch (error) {
+      res.status(500).json({ success: false, message: 'Failed to update' })
+   }
+}
+
+//Delete booking
+export const deleteBooking = async (req, res) => {
+   const id = req.params.id
+
+   try {
+      await Booking.findByIdAndDelete(id)
+
+      res.status(200).json({ success: true, message: 'Successfully deleted' })
+   } catch (error) {
+      res.status(500).json({ success: false, message: 'Failed to delete' })
+   }
+}
