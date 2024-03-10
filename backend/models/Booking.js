@@ -12,6 +12,10 @@ const bookingSchema = new mongoose.Schema(
          type: String,
          required: true,
       },
+      tourPrice: {
+         type: Number,
+         required: true,
+      },
       fullName: {
          type: String,
          required: true,
