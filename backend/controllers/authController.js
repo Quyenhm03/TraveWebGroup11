@@ -59,3 +59,49 @@ export const login = async (req, res) => {
       res.status(500).json({ susccess: false, message: "Failed to login" })
    }
 }
+
+//login with google
+export const google = async (req, res) => {
+   try{
+      const user = await User.findOne({ email: req.body.email })
+
+      // if user exist
+      if (user) {
+         //create jwt token
+         const  token = jwt.sign({id: user._id, role: user.role},
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: "15d" })
+         const { password: hashedPassword, role, ...rest } = user._doc
+
+         // set token in the browser cookies and send the response to the client
+         res.cookie('accessToken', token, {
+            httpOnly: true,
+            expires: token.expiresIn
+         }).status(200).json({success: true, message:"Succesfully login", data:{...rest}})
+      } else {
+         const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+         const hashedPassword = bcrypt.hashSync(generatedPassword, 10)
+         const newUser = new User({
+            username: req.body.name,
+            email: req.body.email,
+            password: hashedPassword,
+            photo: req.body.photo
+         })
+         await newUser.save()
+         const  token = jwt.sign({id: user._id, role: user.role},
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: "15d" })
+         const { password: hashedPassword2, role, ...rest } = user._doc
+
+         // set token in the browser cookies and send the response to the client
+         res.cookie('accessToken', token, {
+            httpOnly: true,
+            expires: token.expiresIn
+         }).status(200).json({success: true, message:"Succesfully login", data:{...rest}})
+
+      }
+
+   }catch (error) {
+      res.status(500).json({ susccess: false, message: "Failed to login" })
+   }
+}
