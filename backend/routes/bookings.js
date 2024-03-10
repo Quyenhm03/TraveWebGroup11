@@ -8,6 +8,7 @@ router.post('/', verifyUser, createBooking)
 router.get('/:id', verifyUser, getBooking)
 router.get('/', verifyAdmin, getAllBooking)
 router.delete('/:id', deleteBooking)
+router.put('/:id', updateBooking)
 router.get('/search/getBookingCount', getBookingCount)
 
 export default router
