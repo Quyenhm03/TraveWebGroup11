@@ -4,13 +4,14 @@ import SideBar from './SideBar'
 import { Button, Table } from 'flowbite-react'
 import { BASE_URL } from '../utils/config'
 import UseFetch from '../hooks/useFetch'
+import { Link } from 'react-router-dom'
 
 const ManageBooking = () => {
     const [pageCount, setPageCount] = useState(0)
     const [page, setPage] = useState(0)
 
     const { data: bookings } = UseFetch(`${BASE_URL}/booking?page=${page}`)
-    const { data: bookingCount } = UseFetch(`${BASE_URL}/booking/search/getUserCount`)
+    const { data: bookingCount } = UseFetch(`${BASE_URL}/booking/search/getBookingCount`)
 
     useEffect(() => {
         const pages = Math.ceil(bookingCount / 8)
@@ -43,7 +44,7 @@ const ManageBooking = () => {
                 <Col lg='3'>
                     <SideBar/>
                 </Col>
-                <Col className='sidebar__dashboard'>
+                <Col className='sidebar__dashboard' lg='9'>
                     <h5>Manage All Booking</h5>
                     <div className="overflow-x-auto">
                         <Table hoverable>
@@ -70,6 +71,9 @@ const ManageBooking = () => {
                                         <Table.Cell>{booking.phone}</Table.Cell>
                                         <Table.Cell>{booking.bookAt}</Table.Cell>
                                         <Table.Cell>
+                                        <Table.Cell>
+                                            <Link to={`/admin/dashboard/editbooking/${booking._id}`}>Edit</Link>
+                                        </Table.Cell>
                                         <Table.Cell>
                                             <Button onClick={() => handleDelete(booking._id)}>Delete</Button>
                                         </Table.Cell>
