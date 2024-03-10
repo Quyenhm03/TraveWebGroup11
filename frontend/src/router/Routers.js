@@ -14,6 +14,7 @@ import DashboardUploadTour from '../dashboard/DashboardUploadTour'
 import UploadBlog from '../dashboard/UploadBlog'
 import EditTour from '../dashboard/EditTour'
 import EditBlog from '../dashboard/EditBlog'
+import EditBooking from '../dashboard/EditBooking'
 import ManageTour from '../dashboard/ManageTour'
 import ManageBlog from '../dashboard/ManageBlog'
 import ManageUser from '../dashboard/ManageUser'
@@ -40,6 +41,7 @@ const Routers = () => {
          <Route path='/admin/dashboard/manageblog' element={<ManageBlog/>} />
          <Route path='/admin/dashboard/edittour/:id' element={<EditTour/>} />
          <Route path='/admin/dashboard/editblog/:id' element={<EditBlog/>} />
+         <Route path='/admin/dashboard/editbooking/:id' element={<EditBooking/>} />
          <Route path='/admin/dashboard/manageuser' element={<ManageUser/>} />
          <Route path='/admin/dashboard/managebooking' element={<ManageBooking/>} />
          <Route path='/tours/search' element={<SearchResultList/>} />
