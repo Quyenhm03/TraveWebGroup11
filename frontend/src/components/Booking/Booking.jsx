@@ -7,7 +7,6 @@ import { AuthContext } from '../../context/AuthContext'
 import { BASE_URL } from '../../utils/config'
 
 const Booking = ({ tour, avgRating }) => {
-   const { price, reviews, title } = tour
    const navigate = useNavigate()
 
    const { user } = useContext(AuthContext)
@@ -15,7 +14,8 @@ const Booking = ({ tour, avgRating }) => {
    const [booking, setBooking] = useState({
       userId: user && user._id,
       userEmail: user && user.email,
-      tourName: title,
+      tourName: tour.title,
+      tourPrice: tour.price,
       fullName: '',
       phone: '',
       guestSize: 1,
@@ -27,7 +27,7 @@ const Booking = ({ tour, avgRating }) => {
    }
 
    const serviceFee = 10
-   const totalAmount = Number(price) * Number(booking.guestSize) + Number(serviceFee)
+   const totalAmount = Number(booking.tourPrice) * Number(booking.guestSize) + Number(serviceFee)
 
    const handleClick = async e => {
       e.preventDefault()
@@ -53,6 +53,25 @@ const Booking = ({ tour, avgRating }) => {
             return alert(result.message)
          }
          navigate('/thank-you')
+
+         //send email
+         const email = {booking: booking, serviceFee: serviceFee, totalAmount: totalAmount}
+         console.log(email)
+         const eres = await fetch(`${BASE_URL}/sendEmail`, {
+            method: 'post',
+            headers: {
+               'content-type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(email)
+         })
+
+         const eresult = await eres.json()
+
+         if(!eres.ok) {
+            return alert(eresult.message)
+         }
+
       } catch (error) {
          alert(error.message)
       }   
@@ -61,10 +80,10 @@ const Booking = ({ tour, avgRating }) => {
    return (
       <div className='booking'>
          <div className="booking__top d-flex align-items-center justify-content-between">
-            <h3>${price} <span>/per person</span></h3>
+            <h3>${booking.tourPrice} <span>/per person</span></h3>
             <span className="tour__rating d-flex align-items-center">
                <i class='ri-star-fill' style={{ 'color': 'var(--secondary-color)' }}></i>
-               {avgRating === 0 ? null : avgRating} ({reviews?.length})
+               {avgRating === 0 ? null : avgRating} ({tour.reviews?.length})
             </span>
          </div>
 
@@ -95,8 +114,8 @@ const Booking = ({ tour, avgRating }) => {
          <div className="booking__bottom">
             <ListGroup>
                <ListGroupItem className='border-0 px-0'>
-                  <h5 className='d-flex align-items-center gap-1'>${price} <i class='ri-close-line'></i> 1 person</h5>
-                  <span> ${price}</span>
+                  <h5 className='d-flex align-items-center gap-1'>${booking.tourPrice} <i class='ri-close-line'></i> 1 person</h5>
+                  <span> ${booking.tourPrice}</span>
                </ListGroupItem>
                <ListGroupItem className='border-0 px-0'>
                   <h5>Service charge</h5>
