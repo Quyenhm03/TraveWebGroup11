@@ -10,6 +10,7 @@ import reviewRoute from './routes/reviews.js'
 import bookingRoute from './routes/bookings.js'
 import commentRoute from './routes/comments.js'
 import blogRoute from './routes/blogs.js'
+import sendEmailRoute from './routes/sendEmail.js'
 
 dotenv.config()
 const app = express()
@@ -40,6 +41,7 @@ app.use("/api/v1/review", reviewRoute)
 app.use("/api/v1/booking", bookingRoute)
 app.use("/api/v1/comment", commentRoute)
 app.use("/api/v1/blog", blogRoute)
+app.use("/api/v1/sendEmail", sendEmailRoute)
 
 app.listen(port, () => {
    connect()
