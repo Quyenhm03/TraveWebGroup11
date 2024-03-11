@@ -8,7 +8,7 @@ import { AuthContext } from '../context/AuthContext'
 import { BASE_URL } from '../utils/config'
 import Google from '../assets/images/google.png'
 import { GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth'
-import { app } from '../firebase/firebaseConfig'
+import { app } from '../firebaseConfig'
 
 const Register = () => {
    const [credentials, setCredentials] = useState({
